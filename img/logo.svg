@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
+  <style>
+    .logo-text { font-family: 'Playfair Display', serif; font-weight: bold; }
+    .dynamis { fill: #333333; }
+    .anos { fill: #d4af37; }
+    .line { fill: #d4af37; }
+  </style>
+  <text x="10" y="45" class="logo-text dynamis" font-size="28">DYNAMIS</text>
+  <text x="130" y="45" class="logo-text anos" font-size="28">40</text>
+  <rect x="10" y="55" width="180" height="2" class="line" />
+  <text x="70" y="70" class="logo-text anos" font-size="14">ANOS</text>
+</svg>

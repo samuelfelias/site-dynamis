@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante o Italiano - Dynamis 40 Anos</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos específicos para a página Restaurante Italiano */
+        .restaurant-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img/hero-bg.svg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            padding: 150px 0 80px;
+            text-align: center;
+        }
+        
+        .restaurant-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--gold);
+        }
+        
+        .videos-section, .partners-section {
+            padding: 80px 0;
+            background-color: var(--beige-light);
+        }
+        
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .video-item {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .video-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .video-item video {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+        
+        .video-info {
+            padding: 20px;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .video-info h3 {
+            color: var(--gold-dark);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .video-info p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .partners-section {
+            background-color: #fff;
+        }
+        
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .partner-item {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 120px;
+        }
+        
+        .partner-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .partner-item img {
+            max-width: 100%;
+            max-height: 80px;
+            object-fit: contain;
+        }
+        
+        /* Estilos para a seção de arquitetura */
+        .architecture-section {
+            background-color: #f9f9f9;
+            padding: 80px 0;
+        }
+        
+        .architecture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .architecture-item {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .architecture-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .architecture-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .architecture-info {
+            padding: 20px;
+        }
+        
+        .architecture-info h3 {
+            color: #8B0000;
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+        
+        .architecture-info p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        /* Estilos para o lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            padding-top: 30px;
+        }
+        
+        .lightbox-content {
+            display: block;
+            margin: 0 auto;
+            max-width: 90%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+        
+        #lightbox-caption {
+            margin: 20px auto;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #fff;
+            font-size: 1.2rem;
+            padding: 10px;
+        }
+        
+        .close-lightbox {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .close-lightbox:hover {
+            color: #bbb;
+        }
+        
+        /* Responsividade melhorada */
+        @media (max-width: 1200px) {
+            .videos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .restaurant-title {
+                font-size: 3rem;
+            }
+            
+            .partners-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .restaurant-header {
+                padding: 100px 0 60px;
+            }
+            
+            .restaurant-title {
+                font-size: 2.5rem;
+            }
+            
+            .videos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .partners-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .videos-section, .partners-section {
+                padding: 60px 0;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .restaurant-title {
+                font-size: 2rem;
+            }
+            
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .video-info h3 {
+                font-size: 1.2rem;
+            }
+            
+            .partner-item {
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>Dynamis <span>40 Anos</span></h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="index.html#sobre">Sobre</a></li>
+                    <li><a href="index.html#depoimentos">Depoimentos</a></li>
+                    <li><a href="restaurante-italiano.html" class="active">Restaurante o Italiano</a></li>
+                    <li><a href="index.html#galeria">Galeria</a></li>
+                    <li><a href="index.html#contato">Contato</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="restaurant-header">
+        <div class="container">
+            <h1 class="restaurant-title">Restaurante o Italiano</h1>
+            <p>Uma experiência gastronômica única para celebrar os 40 anos da Dynamis</p>
+        </div>
+    </section>
+
+    <section class="videos-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nossos Sonhos</h2>
+                <div class="divider"></div>
+                <p>Nosso sonho na Dynamis é criar um centro esportivo e cultural completo, com espaço de treino, moradia, arena para transmissões, eventos e shows</p>
+            </div>
+            
+            <div class="videos-grid">
+                <div class="video-item">
+                    <video controls>
+                        <source src="videos/WhatsApp Video 2025-09-30 at 16.32.17_04361c09.mp4" type="video/mp4">
+                        Seu navegador não suporta o elemento de vídeo.
+                    </video>
+                </div>
+                
+                <div class="video-item">
+                    <video controls>
+                        <source src="videos/WhatsApp Video 2025-09-30 at 16.33.54_e1754350.mp4" type="video/mp4">
+                        Seu navegador não suporta o elemento de vídeo.
+                    </video>
+                </div>
+                
+                <div class="video-item">
+                    <video controls>
+                        <source src="videos/WhatsApp Video 2025-09-30 at 16.34.25_301235e8.mp4" type="video/mp4">
+                        Seu navegador não suporta o elemento de vídeo.
+                    </video>
+                </div>
+                
+                <div class="video-item">
+                    <video controls>
+                        <source src="videos/WhatsApp Video 2025-09-30 at 16.34.52_e07dad78.mp4" type="video/mp4">
+                        Seu navegador não suporta o elemento de vídeo.
+                    </video>
+                </div>
+                
+                <div class="video-item">
+                    <video controls>
+                        <source src="videos/WhatsApp Video 2025-09-30 at 16.38.10_2b940176.mp4" type="video/mp4">
+                        Seu navegador não suporta o elemento de vídeo.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="architecture-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Projeto Arquitetônico</h2>
+                <div class="divider"></div>
+                <p>Veja como nasce o espaço que vai transformar sonhos em realidade.</p>
+            </div>
+            
+            <div class="architecture-grid">
+                <div class="architecture-item">
+                    <img src="img/Arquitetura.png" alt="Projeto Arquitetônico 1">
+                    <div class="architecture-info">
+                        <h3>Implantação no terreno</h3>
+                        <p>Primeira visão do projeto no espaço urbano.</p>
+                    </div>
+                </div>
+                <div class="architecture-item">
+                    <img src="img/Arquitetura-3D.png" alt="Projeto Arquitetônico 2">
+                    <div class="architecture-info">
+                        <h3>Estudo arquitetônico</h3>
+                        <p>Distribuição das áreas esportivas e culturais.</p>
+                    </div>
+                </div>
+                <div class="architecture-item">
+                    <img src="img/Arquitetura-3D-2.png" alt="Projeto Arquitetônico 3">
+                    <div class="architecture-info">
+                        <h3>Visão integrada</h3>
+                        <p>Como o projeto se conecta à cidade e ao entorno.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="partners-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nossos Patrocinadores</h2>
+                <div class="divider"></div>
+                <p>Empresas que fazem parte da nossa história</p>
+            </div>
+            
+            <div class="partners-grid">
+                <div class="partner-item">
+                    <img src="img/logo-parceiros/Acropole.png" alt="Acropole">
+                </div>
+                <div class="partner-item">
+                    <img src="img/logo-parceiros/Cava Play.png" alt="Cava Play">
+                </div>
+                <div class="partner-item">
+                    <img src="img/logo-parceiros/ClubeDoTenis.png" alt="Clube Do Tenis">
+                </div>
+                <div class="partner-item">
+                    <img src="img/logo-parceiros/FerreiraRocha.png" alt="Ferreira Rocha">
+                </div>
+                <div class="partner-item">
+                    <img src="img/logo-parceiros/Keyword.png" alt="Keyword">
+                </div>
+                <div class="partner-item">
+                    <img src="img/logo-parceiros/MateCouro.png" alt="Mate Couro">
+                </div>
+                <div class="partner-item">
+                    <img src="img/logo-parceiros/NTB.png" alt="NTB">
+                </div>
+                <div class="partner-item">
+                    <img src="img/logo-parceiros/Oticas Diniz.png" alt="Oticas Diniz">
+                </div>
+                <div class="partner-item">
+                    <img src="img/logo-parceiros/Sem título.png" alt="Parceiro">
+                </div>
+                <div class="partner-item">
+                    <img src="img/logo-parceiros/neuco.png" alt="Neuco">
+                </div>
+                <div class="partner-item">
+                    <img src="img/logo-parceiros/viniltec.png" alt="Viniltec">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox para ampliação das imagens -->
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div id="lightbox-caption"></div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Dynamis <span>40 Anos</span></h2>
+                    <p>Celebrando quatro décadas de excelência.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="index.html#sobre">Sobre</a></li>
+                        <li><a href="index.html#depoimentos">Depoimentos</a></li>
+                        <li><a href="restaurante-italiano.html">Restaurante o Italiano</a></li>
+                        <li><a href="index.html#galeria">Galeria</a></li>
+                        <li><a href="index.html#contato">Contato</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Dynamis - 40 Anos de História. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Lightbox para ampliação das imagens
+        document.addEventListener('DOMContentLoaded', function() {
+            // Seleciona todas as imagens da seção de arquitetura
+            const architectureImages = document.querySelectorAll('.architecture-item img');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const closeLightbox = document.querySelector('.close-lightbox');
+            
+            // Adiciona evento de clique para cada imagem
+            architectureImages.forEach(img => {
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', function() {
+                    lightbox.style.display = 'block';
+                    lightboxImg.src = this.src;
+                    
+                    // Captura o título da imagem para exibir como legenda
+                    const caption = this.closest('.architecture-item').querySelector('h3').textContent;
+                    lightboxCaption.textContent = caption;
+                });
+            });
+            
+            // Fecha o lightbox ao clicar no X
+            closeLightbox.addEventListener('click', function() {
+                lightbox.style.display = 'none';
+            });
+            
+            // Fecha o lightbox ao clicar fora da imagem
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    lightbox.style.display = 'none';
+                }
+            });
+            
+            // Fecha o lightbox ao pressionar ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    lightbox.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
